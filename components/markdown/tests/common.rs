@@ -14,7 +14,6 @@ fn configurable_render(
     insert_anchor: InsertAnchor,
 ) -> Result<Rendered> {
     let mut tera = ZOLA_TERA.clone();
-    tera.set_fallback_prefixes(vec!["__zola_builtins/".to_string()]);
 
     let mut permalinks = HashMap::new();
     permalinks.insert("pages/about.md".to_owned(), "https://getzola.org/about/".to_owned());

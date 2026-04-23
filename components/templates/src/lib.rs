@@ -33,6 +33,11 @@ const BUILTIN_TEMPLATES: &[(&str, &str)] = &[
 
 pub static ZOLA_TERA: LazyLock<Tera> = LazyLock::new(|| {
     let mut tera = Tera::default();
+
+    // Only really needed for tests
+    tera.set_fallback_prefixes(vec!["__zola_builtins/".to_string()])
+        .expect("no templates registered");
+
     // tera-contrib stuff
     tera.register_filter("base64_encode", tera_contrib::base64::b64_encode);
     tera.register_filter("base64_decode", tera_contrib::base64::b64_decode);
@@ -46,6 +51,7 @@ pub static ZOLA_TERA: LazyLock<Tera> = LazyLock::new(|| {
     tera.register_filter("format", tera_contrib::format::format);
     tera.register_filter("slugify", tera_contrib::slug::slug);
     tera.register_filter("date", tera_contrib::dates::date);
+    tera.register_filter("shuffle", tera_contrib::rand::shuffle);
 
     tera.register_function("get_random", tera_contrib::rand::get_random);
 
@@ -101,7 +107,7 @@ pub fn load_tera(path: &Path, config: &Config) -> Result<Tera> {
         fallback_prefixes.push(format!("{}/templates/", theme));
     }
     fallback_prefixes.push("__zola_builtins/".to_string());
-    tera.set_fallback_prefixes(fallback_prefixes);
+    tera.set_fallback_prefixes(fallback_prefixes)?;
 
     // Register filters/tests/functions from ZOLA_TERA
     tera.register_from(&ZOLA_TERA);
