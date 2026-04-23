@@ -749,14 +749,12 @@ impl Site {
             .map(|x| x.generate_themes_css())
             .unwrap_or_default();
         if !themes.is_empty() {
-            create_directory(&self.static_path)?;
+            create_directory(&self.output_path)?;
         }
 
         for (filename, content) in themes {
-            let p = self.static_path.join(filename);
-            if !p.exists() {
-                create_file(&p, content)?;
-            }
+            let p = self.output_path.join(filename);
+            create_file(&p, content)?;
         }
 
         Ok(())
