@@ -100,7 +100,7 @@ impl Page {
             page.file.find_language(&config.default_language, &config.other_languages_codes())?;
 
         page.raw_content = content.to_string();
-        let (word_count, reading_time) = get_reading_analytics(&page.raw_content);
+        let (word_count, reading_time) = get_reading_analytics(&page.raw_content, &page.lang);
         page.word_count = Some(word_count);
         page.reading_time = Some(reading_time);
 

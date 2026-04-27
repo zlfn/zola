@@ -31,9 +31,9 @@ summary: String?;
 taxonomies: HashMap<String, Array<String>>;
 extra: HashMap<String, Any>;
 toc: Array<Header>,
-// Naive word count, will not work for languages without whitespace
+// Word count via unicode_words; for `zh` and `ja` this is a character count
 word_count: Number;
-// Based on https://help.medium.com/hc/en-us/articles/214991667-Read-time
+// Estimated reading time in minutes, using per-language silent-reading rates
 reading_time: Number;
 // earlier / lighter
 lower: Page?;
@@ -90,9 +90,9 @@ pages: Array<Page>;
 // the actual section object if you need it
 subsections: Array<String>;
 toc: Array<Header>,
-// Unicode word count
+// Word count via unicode_words; for `zh` and `ja` this is a character count
 word_count: Number;
-// Based on https://help.medium.com/hc/en-us/articles/214991667-Read-time
+// Estimated reading time in minutes, using per-language silent-reading rates
 reading_time: Number;
 // Paths of colocated assets, relative to the content directory
 assets: Array<String>;
